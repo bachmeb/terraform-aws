@@ -65,16 +65,16 @@ unzip terraform_1.0.3_linux_386.zip
 ```
 vi ~/.bash_profile
 ```
->```
-> # .bash_profile
-> 
-> # Get the aliases and functions
-> if [ -f ~/.bashrc ]; then
-> 	. ~/.bashrc
-> fi
-> 
-> # User specific environment and startup programs
-> export PATH=$PATH:$HOME/Development/Applications/Terraform
+>```bash
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+export PATH=$PATH:$HOME/Development/Applications/Terraform
 
 ```
 source ~/.bash_profile 
