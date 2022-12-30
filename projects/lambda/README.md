@@ -8,10 +8,12 @@ mkdir python/venv
 python3 -m venv python/venv/
 source python/venv/bin/activate
 ```
+
 ### Lambda Basic Execution Role
 https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html
 
 ### Test
 ``` 
-aws lambda invoke --function-name asdf-2 output.txt
+aws lambda list-functions
+aws lambda invoke --function-name terraform-aws-lambda-example output.txt
 ```

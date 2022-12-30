@@ -9,7 +9,7 @@ data "aws_iam_policy" "p" {
 }
 
 resource "aws_iam_role" "r" {
-  name_prefix = "dec-28-"
+  name_prefix = "${local.project_name}-"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -32,7 +32,7 @@ resource "aws_cloudwatch_log_group" "g" {
 }
 
 resource "aws_lambda_function" "f" {
-  function_name = "example"
+  function_name = local.project_name
   role = aws_iam_role.r.arn
   handler = "abcde.xyz"
   filename = data.archive_file.z.output_path
