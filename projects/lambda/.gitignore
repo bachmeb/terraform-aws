@@ -5,7 +5,6 @@
 # Terraform
 .terraform*
 terraform.state*
-*.zip
 
 ## Python
 __pycache__

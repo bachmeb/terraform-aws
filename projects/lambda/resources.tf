@@ -1,30 +1,14 @@
-data "archive_file" lambda {
+data "archive_file" z {
   source_dir = "python/src"
-  output_path = "asdfasdfasdf.zip"
-  type        = "zip"
+  output_path = "python/build/package.zip"
+  type = "zip"
 }
 
-resource "aws_cloudwatch_log_group" "example" {
-  name              = "/aws/lambda/${aws_lambda_function.asdf-2.function_name}"
-  retention_in_days = 14
-}
-
-resource "aws_lambda_function" "asdf-2" {
-  function_name = "asdf-2"
-  role          = aws_iam_role.for_lambda.arn
-  handler = "abcde.xyz"
-  filename = data.archive_file.lambda.output_path
-  source_code_hash = data.archive_file.lambda.output_base64sha256
-  runtime = "python3.9"
-  environment {variables = {hello = "there"}}
-
-}
-
-data "aws_iam_policy" "aws_lambda_basic_execution_role" {
+data "aws_iam_policy" "p" {
   name = "AWSLambdaBasicExecutionRole"
 }
 
-resource "aws_iam_role" "for_lambda" {
+resource "aws_iam_role" "r" {
   name_prefix = "dec-28-"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -32,12 +16,27 @@ resource "aws_iam_role" "for_lambda" {
       {
         Action = "sts:AssumeRole"
         Effect = "Allow"
-        Sid    = ""
+        Sid = ""
         Principal = {
           Service = "lambda.amazonaws.com"
         }
       },
     ]
   })
-  managed_policy_arns = [data.aws_iam_policy.aws_lambda_basic_execution_role.arn]
+  managed_policy_arns = [data.aws_iam_policy.p.arn]
+}
+
+resource "aws_cloudwatch_log_group" "g" {
+  name = "/aws/lambda/${aws_lambda_function.f.function_name}"
+  retention_in_days = 14
+}
+
+resource "aws_lambda_function" "f" {
+  function_name = "example"
+  role = aws_iam_role.r.arn
+  handler = "abcde.xyz"
+  filename = data.archive_file.z.output_path
+  source_code_hash = data.archive_file.z.output_base64sha256
+  runtime = "python3.9"
+  environment { variables = { hello = "there" } }
 }
